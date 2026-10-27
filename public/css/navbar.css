@@ -1,0 +1,27 @@
+/* Navbar */
+.navbar { 
+background: #A9EEFE;
+background: linear-gradient(90deg, rgba(169, 238, 254, 1) 0%, rgba(84, 161, 244, 1) 50%, rgba(243, 219, 235, 1) 100%); 
+
+}
+
+.navbar span{
+    color: #222B3A;
+}
+
+.navbar-glass {
+  background: rgba(255, 255, 255, 0.45);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+          backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.navbar .navbar-nav .nav-link:hover {
+  color: #A5B3C5 !important; 
+}
+
+.navbar .navbar-nav .nav-link.active {
+  color: #5B6B7C !important;
+  font-weight: bold;
+}
+
