@@ -4,25 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Event Schedule - UKM</title>
-    
+    <title>Event Schedule - UKM App</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS + Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+
+    <!-- Custom CSS Schedule -->
     <link rel="stylesheet" href="{{ asset('assets/css/schedule.css') }}">
+    
+    <style>
+        /* Tambahan agar jarak aman dari navbar fixed */
+        body { padding-top: 80px; font-family: 'Poppins', sans-serif; }
+    </style>
 </head>
-<body>
+<body class="bg-light">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="#"><i class="bi bi-calendar-event"></i> UKM App</a>
-            <div class="d-flex">
-                <span class="navbar-text text-white">Hello, {{ Auth::user()->name ?? 'Guest' }}</span>
-            </div>
-        </div>
-    </nav>
+    {{-- <x-navbar></x-navbar> --}}
 
-    <div class="container pb-5">
+    <!-- Main Content -->
+    <div class="container pb-5 my-4">
         
+        <!-- Header & Add Button -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2 class="mb-0 fw-bold">Event Schedule</h2>
@@ -33,6 +43,7 @@
             </button>
         </div>
 
+        <!-- Alert Sukses -->
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="bi bi-check-circle-fill"></i> {{ session('success') }}
@@ -40,20 +51,22 @@
             </div>
         @endif
 
-        <div class="card">
-            <div class="card-body">
+        <!-- Schedule Table Card -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
                 
-                <div class="row mb-3">
+                <!-- Search Bar -->
+                <div class="row mb-4">
                     <div class="col-md-6">
                         <div class="input-group">
-                            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-                            <input type="text" class="form-control" id="searchInput" placeholder="Search events by name or location...">
+                            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" class="form-control border-start-0 ps-0" id="searchInput" placeholder="Search events by name or location...">
                         </div>
                     </div>
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-hover" id="scheduleTable">
+                    <table class="table table-hover align-middle" id="scheduleTable">
                         <thead class="table-light">
                             <tr>
                                 <th>No</th>
@@ -65,7 +78,6 @@
                             </tr>
                         </thead>
                         <tbody id="scheduleBody">
-                            <!-- UBAH VARIABEL JADI $schedules -->
                             @forelse($schedules as $index => $schedule)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
@@ -86,12 +98,12 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <!-- Sesuaikan nama route & ID -->
-                                    <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#attendanceModal-{{ $schedule->id }}" title="Attendance"><i class="bi bi-person-check"></i></button>
+                                    <a href="{{ route('presence.index', $schedule->id) }}" class="btn btn-sm btn-outline-info" title="View / Mark Attendance">
+                                        <i class="bi bi-person-check"></i>
+                                    </a>
                                     
                                     <button class="btn btn-sm btn-outline-warning" title="Edit"><i class="bi bi-pencil"></i></button>
                                     
-                                    <!-- Route delete disesuaikan -->
                                     <form action="{{ route('schedule.destroy', $schedule->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this schedule?');">
                                         @csrf
                                         @method('DELETE')
@@ -99,68 +111,10 @@
                                     </form>
                                 </td>
                             </tr>
-
-                            <!-- MODAL ATTENDANCE -->
-                            <div class="modal fade" id="attendanceModal-{{ $schedule->id }}" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Attendance: {{ $schedule->eventName }}</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <form action="#" method="POST"> <!-- Nanti ganti action route presensi -->
-                                            @csrf
-                                            <input type="hidden" name="sch_id" value="{{ $schedule->id }}">
-                                            <div class="modal-body">
-                                                <p class="text-muted small">Mark the attendance status for each member below.</p>
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered">
-                                                        <thead class="table-light">
-                                                            <tr>
-                                                                <th>Name</th>
-                                                                <th class="text-center">Status</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <!-- UBAH JADI $users -->
-                                                            @forelse($users as $user)
-                                                            <tr>
-                                                                <td>{{ $user->name }}</td>
-                                                                <td class="text-center">
-                                                                    <div class="btn-group btn-group-sm">
-                                                                        <!-- Value disesuaikan dengan enum database: present, leave, alfa -->
-                                                                        <input type="radio" class="btn-check" name="status[{{ $user->id }}]" id="present_{{ $schedule->id }}_{{ $user->id }}" value="present" checked>
-                                                                        <label class="btn btn-outline-success" for="present_{{ $schedule->id }}_{{ $user->id }}">Present</label>
-
-                                                                        <input type="radio" class="btn-check" name="status[{{ $user->id }}]" id="leave_{{ $schedule->id }}_{{ $user->id }}" value="leave">
-                                                                        <label class="btn btn-outline-warning" for="leave_{{ $schedule->id }}_{{ $user->id }}">Leave</label>
-
-                                                                        <input type="radio" class="btn-check" name="status[{{ $user->id }}]" id="alfa_{{ $schedule->id }}_{{ $user->id }}" value="alfa">
-                                                                        <label class="btn btn-outline-danger" for="alfa_{{ $schedule->id }}_{{ $user->id }}">Absent</label>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            @empty
-                                                            <tr>
-                                                                <td colspan="2" class="text-center text-muted">No members found.</td>
-                                                            </tr>
-                                                            @endforelse
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save Attendance</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                             @empty
                             <tr>
-                                <td colspan="6" class="text-center text-muted py-4">
-                                    <i class="bi bi-calendar-x fs-3 d-block mb-2"></i>
+                                <td colspan="6" class="text-center text-muted py-5">
+                                    <i class="bi bi-calendar-x fs-1 d-block mb-3"></i>
                                     No schedules found. Click "Add Schedule" to create one.
                                 </td>
                             </tr>
@@ -191,7 +145,6 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="eventName" class="form-label">Event Name</label>
-                            <!-- name="" disesuaikan dengan database -->
                             <input type="text" class="form-control" id="eventName" name="eventName" placeholder="e.g., Weekly Meeting" required>
                         </div>
                         <div class="row">
@@ -222,7 +175,12 @@
         </div>
     </div>
 
+    {{-- <x-footer></x-footer> --}}
+
+    <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
     <script src="{{ asset('assets/js/schedule.js') }}"></script>
 </body>
 </html>

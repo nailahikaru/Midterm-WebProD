@@ -1,29 +1,19 @@
 :root {
     /* Ganti warna Primary (tombol, navbar, link) */
-    --bs-primary: #59AFFF; 
+    --bs-primary: #A9EEFE; 
     --bs-primary-rgb: 37, 99, 235;
     
     /* Ganti warna background body */
-    --bs-body-bg: #f3f4f6;
+    --bs-body-bg: #F6F8FB;
     
     /* Ganti warna teks utama */
     --bs-body-color: #222B3A;
 }
 
-body {
-    background-color: var(--bs-body-bg);
-    color: var(--bs-body-color);
-}
-
-/* Navbar Custom */
-.navbar.bg-primary {
-    background-color: #8ECFFF !important;
-}
-
 /* Card Custom */
 .card {
     border: none;
-    background-color: #F6F8FB;
+    background-color: #E6F0FA;
     box-shadow: 0 4px 12px #A5B3C5; 
     transition: transform 0.2s ease;
 }
@@ -37,11 +27,21 @@ body {
     vertical-align: middle;
 }
 
-/* Ganti warna tombol primary agar mengikuti variable */
-.btn-primary {
-    --bs-btn-bg: var(--bs-primary);
-    --bs-btn-border-color: var(--bs-primary);
-    --bs-btn-hover-bg: #3B82F6;
-    --bs-btn-hover-border-color: #3B82F6;
-    --bs-btn-color: #fff;
+.btn-custom-schedule {
+    background-color: #59AFFF;
+    color: #222B3A;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Jarak ikon dan teks */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-custom-schedule:hover {
+    background-color: #3B82F6;
+    color: #ffffff;
 }
