@@ -25,7 +25,7 @@
         body { padding-top: 80px; font-family: 'Poppins', sans-serif; }
     </style>
 </head>
-<body class="bg-light">
+<body class="bg-light min-h-full flex flex-col">
 
     <x-navbar></x-navbar>
 

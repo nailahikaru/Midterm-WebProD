@@ -11,7 +11,7 @@ class SchedController extends Controller
 {
     public function index()
     {
-        // Urutkan berdasarkan eventDate (sesuai nama kolom di database kamu)
+        // Urutkan berdasarkan eventDate
         $schedules = Schedule::orderBy('eventDate', 'desc')->get();
         
         // Ambil semua data user untuk ditampilkan di modal absensi
