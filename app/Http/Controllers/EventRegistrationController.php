@@ -29,7 +29,7 @@ class EventRegistrationController extends Controller
                 'digits:10',
                 Rule::unique('event_registrations', 'nrp')->where('event_id', $event->id),
             ],
-            'division' => ['required', Rule::in(EventRegistration::DIVISIONS)],
+            'division' => ['required', Rule::in($event->divisions->pluck('name')->all())],
             'reason' => 'required|string',
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',

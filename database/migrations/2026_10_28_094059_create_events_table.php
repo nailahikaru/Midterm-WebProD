@@ -21,6 +21,15 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('event_divisions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
+            $table->string('name', 50);
+            $table->timestamps();
+
+            $table->unique(['event_id', 'name']);
+        });
+
         Schema::create('event_registrations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id')->constrained()->cascadeOnDelete();
@@ -39,6 +48,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('event_registrations');
+        Schema::dropIfExists('event_divisions');
         Schema::dropIfExists('events');
     }
 };

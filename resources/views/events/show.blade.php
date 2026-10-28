@@ -39,11 +39,17 @@
             <i class="bi bi-hourglass-split"></i>
             Batas pendaftaran: {{ $event->registration_deadline->format('d M Y') }}
           </p>
-          <p class="mb-0">
+          <p class="mb-2">
             <i class="bi bi-people"></i>
             Terisi {{ $event->seatsTaken() }} / {{ $event->quota }}
             (sisa {{ $event->seatsLeft() }})
           </p>
+          <p class="mb-1"><i class="bi bi-diagram-3"></i> Divisi yang dibuka:</p>
+          <div class="d-flex flex-wrap gap-2">
+            @foreach ($event->divisions as $division)
+              <span class="badge bg-primary">{{ $division->name }}</span>
+            @endforeach
+          </div>
         </div>
       </div>
     </div>
@@ -82,9 +88,9 @@
                 <select id="division" name="division"
                         class="form-select @error('division') is-invalid @enderror">
                   <option value="">-- Pilih divisi --</option>
-                  @foreach (\App\Models\EventRegistration::DIVISIONS as $division)
-                    <option value="{{ $division }}" @selected(old('division') === $division)>
-                      {{ $division }}
+                  @foreach ($event->divisions as $division)
+                    <option value="{{ $division->name }}" @selected(old('division') === $division->name)>
+                      {{ $division->name }}
                     </option>
                   @endforeach
                 </select>

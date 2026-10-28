@@ -27,6 +27,11 @@ class Event extends Model
         return $this->hasMany(EventRegistration::class);
     }
 
+    public function divisions()
+    {
+        return $this->hasMany(EventDivision::class);
+    }
+
     public function seatsTaken()
     {
         return $this->registrations()->where('status', '!=', 'ditolak')->count();

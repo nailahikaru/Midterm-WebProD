@@ -1,4 +1,12 @@
-@php $event = $event ?? null; @endphp
+@php
+  $event = $event ?? null;
+  $divisionText = old(
+    'divisions',
+    $event
+      ? $event->divisions->pluck('name')->implode("\n")
+      : "Acara\nHumas\nDokumentasi\nPerlengkapan\nKonsumsi\nDesain"
+  );
+@endphp
 
 <div class="mb-3">
   <label for="name" class="form-label">Nama event</label>
@@ -53,6 +61,14 @@
          class="form-control @error('quota') is-invalid @enderror"
          value="{{ old('quota', $event?->quota) }}">
   @error('quota') <div class="invalid-feedback">{{ $message }}</div> @enderror
+</div>
+
+<div class="mb-3">
+  <label for="divisions" class="form-label">Divisi yang dibuka</label>
+  <textarea id="divisions" name="divisions" rows="6"
+            class="form-control @error('divisions') is-invalid @enderror">{{ $divisionText }}</textarea>
+  <div class="form-text">Tulis satu divisi per baris. Hanya divisi ini yang muncul di formulir pendaftaran event.</div>
+  @error('divisions') <div class="invalid-feedback">{{ $message }}</div> @enderror
 </div>
 
 <div class="d-flex gap-2">
