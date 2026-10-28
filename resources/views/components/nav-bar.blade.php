@@ -1,4 +1,3 @@
- 
  <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
  
  <nav class="navbar navbar-expand-lg navbar-light shadow-sm fixed-top">
@@ -23,6 +22,16 @@
             <a class="nav-link {{ request()->is('profile-ukm') ? 'active' : '' }}" href="{{ url('/profile-ukm') }}">About us</a>
           </li>
 
+          <li class="nav-item">
+            <a class="nav-link {{ request()->is('announcements*') ? 'active' : '' }}" href="{{ route('announcements.index') }}">Pengumuman</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->is('portfolios*') ? 'active' : '' }}" href="{{ route('portfolios.index') }}">Galeri</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->is('events*') ? 'active' : '' }}" href="{{ route('events.index') }}">Event</a>
+          </li>
+
           @guest
             <li class="nav-item">
               <a class="nav-link {{ request()->is('login') ? 'active' : '' }}" href="{{ route('login') }}">Login</a>
@@ -33,6 +42,15 @@
           @endguest
 
           @auth
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('schedule*') ? 'active' : '' }}" href="{{ route('schedule.index') }}">Jadwal</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('presence*') ? 'active' : '' }}" href="{{ route('presence.list') }}">Presensi</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('cash*') ? 'active' : '' }}" href="{{ route('cash.index') }}">Kas</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link {{ request()->is('profile') ? 'active' : '' }}" href="{{ route('profile') }}">Profile</a>
             </li>

@@ -4,9 +4,11 @@
 @section('content')
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="h2 fw-semibold mb-0">Pengumuman</h1>
-    <a href="{{ route('announcements.create') }}" class="btn btn-primary">
-      <i class="bi bi-plus-lg"></i> Tambah
-    </a>
+    @auth
+      <a href="{{ route('announcements.create') }}" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Tambah
+      </a>
+    @endauth
   </div>
 
   @if (session('success'))
@@ -23,19 +25,21 @@
         <p class="mb-2">{!! nl2br(e($announcement->content)) !!}</p>
         <small class="text-muted">Oleh {{ $announcement->user?->name ?? 'Admin' }}</small>
 
-        <div class="mt-3 d-flex gap-2">
-          <a href="{{ route('announcements.edit', $announcement) }}" class="btn btn-sm btn-outline-primary">
-            <i class="bi bi-pencil"></i> Ubah
-          </a>
-          <form action="{{ route('announcements.destroy', $announcement) }}" method="POST"
-                onsubmit="return confirm('Hapus pengumuman ini?')">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-sm btn-outline-danger">
-              <i class="bi bi-trash"></i> Hapus
-            </button>
-          </form>
-        </div>
+        @auth
+          <div class="mt-3 d-flex gap-2">
+            <a href="{{ route('announcements.edit', $announcement) }}" class="btn btn-sm btn-outline-primary">
+              <i class="bi bi-pencil"></i> Ubah
+            </a>
+            <form action="{{ route('announcements.destroy', $announcement) }}" method="POST"
+                  onsubmit="return confirm('Hapus pengumuman ini?')">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-trash"></i> Hapus
+              </button>
+            </form>
+          </div>
+        @endauth
       </div>
     </div>
   @empty
