@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\PortfolioController;
@@ -16,7 +18,23 @@ Route::get('/profile-ukm', function () {
 
 Route::get('/profile', function () {
     return view('profile');
+})->middleware('auth')->name('profile');
+
+Route::put('/profile', [ProfileController::class, 'update'])
+    ->middleware('auth')
+    ->name('profile.update');
+
+// ===== Rute dari branch 'autentikasi' =====
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
 });
+
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
 
 // ===== Fitur C: Pengumuman =====
 Route::resource('announcements', AnnouncementController::class)->except(['show']);

@@ -22,9 +22,27 @@
           <li class="nav-item">
             <a class="nav-link {{ request()->is('profile-ukm') ? 'active' : '' }}" href="{{ url('/profile-ukm') }}">About us</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('profile') ? 'active' : '' }}" href="{{ url('/profile') }}">Profile</a>
-          </li>
+
+          @guest
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('login') ? 'active' : '' }}" href="{{ route('login') }}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('register') ? 'active' : '' }}" href="{{ route('register') }}">Register</a>
+            </li>
+          @endguest
+
+          @auth
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('profile') ? 'active' : '' }}" href="{{ route('profile') }}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="nav-link btn btn-link">Logout</button>
+              </form>
+            </li>
+          @endauth
         </ul>
       </div>
     </div>

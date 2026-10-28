@@ -29,7 +29,7 @@
     <!-- Jumbotron -->
     <section class="jumbotron text-center">
       <div class="container">
-        <h1 class="display-4 fw-semibold">Hello Traveler!</h1>
+        <h1 class="nama display-4">Hello {{ Auth::check() ? Auth::user()->name : 'Traveler' }}!</h1>
         <p class="lead fw-medium mb-0">welcome to UKM Genshin</p>
       </div>
     </section>
