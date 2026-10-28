@@ -1,0 +1,47 @@
+:root {
+    /* Ganti warna Primary (tombol, navbar, link) */
+    --bs-primary: #A9EEFE; 
+    --bs-primary-rgb: 37, 99, 235;
+    
+    /* Ganti warna background body */
+    --bs-body-bg: #F6F8FB;
+    
+    /* Ganti warna teks utama */
+    --bs-body-color: #222B3A;
+}
+
+/* Card Custom */
+.card {
+    border: none;
+    background-color: #E6F0FA;
+    box-shadow: 0 4px 12px #A5B3C5; 
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px #5B6B7C;
+}
+
+.table > :not(caption) > * > * {
+    vertical-align: middle;
+}
+
+.btn-custom-schedule {
+    background-color: #59AFFF;
+    color: #222B3A;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Jarak ikon dan teks */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-custom-schedule:hover {
+    background-color: #3B82F6;
+    color: #ffffff;
+}
