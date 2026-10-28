@@ -9,6 +9,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventRegistrationController;
 use App\Http\Controllers\SchedController;
 use App\Http\Controllers\CashController;
+use App\Http\Controllers\PresenceController;
 
 Route::get('/', function () {
     return view('home');
@@ -38,21 +39,44 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-// ===== Fitur C: Pengumuman =====
-Route::resource('announcements', AnnouncementController::class)->except(['show']);
+// ===== Wajib login: Fitur C (tambah, ubah, hapus) + Jadwal, Kas, Presensi =====
+// Catatan: grup ini HARUS di atas rute publik, supaya /events/create
+// tidak dianggap sebagai /events/{event}.
+Route::middleware('auth')->group(function () {
+    // Pengumuman
+    Route::resource('announcements', AnnouncementController::class)
+        ->except(['index', 'show']);
 
-// ===== Fitur C: Portofolio =====
-Route::resource('portfolios', PortfolioController::class)->except(['show']);
+    // Portofolio
+    Route::resource('portfolios', PortfolioController::class)
+        ->except(['index', 'show']);
 
-// ===== Fitur C: Event Kepanitiaan =====
-Route::resource('events', EventController::class);
-Route::post('events/{event}/register', [EventRegistrationController::class, 'store'])->name('events.register');
-Route::patch('registrations/{registration}/status', [EventRegistrationController::class, 'updateStatus'])->name('registrations.status');
+    // Event kepanitiaan
+    Route::resource('events', EventController::class)
+        ->except(['index', 'show']);
+    Route::post('events/{event}/register', [EventRegistrationController::class, 'store'])
+        ->name('events.register');
+    Route::patch('registrations/{registration}/status', [EventRegistrationController::class, 'updateStatus'])
+        ->name('registrations.status');
 
-Route::get('/schedule', [SchedController::class, 'index'])->name('schedule.index');
-Route::post('/schedule', [SchedController::class, 'store'])->name('schedule.store');
-Route::delete('/schedule/{id}', [SchedController::class, 'destroy'])->name('schedule.destroy');
-Route::get('/presence', [App\Http\Controllers\PresenceController::class, 'listSchedules'])->name('presence.index');
-Route::get('/cash', [CashController::class, 'index'])->name('cash.index');
-Route::post('/cash', [CashController::class, 'store'])->name('cash.store');
-Route::delete('/cash/{id}', [CashController::class, 'destroy'])->name('cash.destroy');
+    // Jadwal
+    Route::get('/schedule', [SchedController::class, 'index'])->name('schedule.index');
+    Route::post('/schedule', [SchedController::class, 'store'])->name('schedule.store');
+    Route::delete('/schedule/{id}', [SchedController::class, 'destroy'])->name('schedule.destroy');
+
+    // Kas
+    Route::get('/cash', [CashController::class, 'index'])->name('cash.index');
+    Route::post('/cash', [CashController::class, 'store'])->name('cash.store');
+    Route::delete('/cash/{id}', [CashController::class, 'destroy'])->name('cash.destroy');
+
+    // Presensi (rute /presence/list harus di atas /presence/{id})
+    Route::get('/presence/list', [PresenceController::class, 'listSchedules'])->name('presence.list');
+    Route::post('/presence', [PresenceController::class, 'store'])->name('presence.store');
+    Route::get('/presence/{id}', [PresenceController::class, 'index'])->name('presence.index');
+});
+
+// ===== Bisa dilihat siapa saja =====
+Route::get('announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
+Route::get('portfolios', [PortfolioController::class, 'index'])->name('portfolios.index');
+Route::get('events', [EventController::class, 'index'])->name('events.index');
+Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');

@@ -63,6 +63,11 @@
             <div class="alert alert-secondary mb-0">Pendaftaran sudah ditutup.</div>
           @elseif ($event->seatsLeft() < 1)
             <div class="alert alert-danger mb-0">Kuota sudah penuh.</div>
+          @elseif (!auth()->check())
+            <div class="alert alert-info mb-0">
+              Silakan <a href="{{ route('login') }}">login</a> atau
+              <a href="{{ route('register') }}">register</a> untuk mendaftar.
+            </div>
           @else
             <form action="{{ route('events.register', $event) }}" method="POST">
               @csrf
@@ -123,7 +128,9 @@
               <th>Divisi</th>
               <th>Alasan</th>
               <th>Status</th>
-              <th>Aksi</th>
+              @auth
+                <th>Aksi</th>
+              @endauth
             </tr>
           </thead>
           <tbody>
@@ -141,26 +148,28 @@
                 <td>{{ $registration->division }}</td>
                 <td>{{ $registration->reason }}</td>
                 <td><span class="badge bg-{{ $badge }}">{{ ucfirst($registration->status) }}</span></td>
-                <td>
-                  <div class="d-flex gap-1">
-                    <form action="{{ route('registrations.status', $registration) }}" method="POST">
-                      @csrf
-                      @method('PATCH')
-                      <input type="hidden" name="status" value="diterima">
-                      <button type="submit" class="btn btn-sm btn-success">Terima</button>
-                    </form>
-                    <form action="{{ route('registrations.status', $registration) }}" method="POST">
-                      @csrf
-                      @method('PATCH')
-                      <input type="hidden" name="status" value="ditolak">
-                      <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
-                    </form>
-                  </div>
-                </td>
+                @auth
+                  <td>
+                    <div class="d-flex gap-1">
+                      <form action="{{ route('registrations.status', $registration) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="status" value="diterima">
+                        <button type="submit" class="btn btn-sm btn-success">Terima</button>
+                      </form>
+                      <form action="{{ route('registrations.status', $registration) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="status" value="ditolak">
+                        <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
+                      </form>
+                    </div>
+                  </td>
+                @endauth
               </tr>
             @empty
               <tr>
-                <td colspan="6" class="text-center">Belum ada pendaftar.</td>
+                <td colspan="{{ auth()->check() ? 6 : 5 }}" class="text-center">Belum ada pendaftar.</td>
               </tr>
             @endforelse
           </tbody>
