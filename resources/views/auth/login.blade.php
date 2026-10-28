@@ -5,7 +5,7 @@
         <div class="card-body p-4">
           <h2 class="fw-semibold text-center mb-4">Login</h2>
 
-          <form method="POST" action="{{ route('register') }}"
+          <form method="POST" action="{{ route('login') }}"
       onsubmit="this.querySelector('button[type=submit]').disabled = true">
             @csrf
 
