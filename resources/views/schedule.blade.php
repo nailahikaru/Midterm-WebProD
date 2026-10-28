@@ -9,14 +9,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    
     <!-- Bootstrap CSS + Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
-
+    
+    {{-- <link rel="stylesheet" href="{{ asset('css/navbar.css') }}"> --}}
+    {{-- <link rel="stylesheet" href="{{ asset('css/footer.css') }}"> --}}
+    
     <!-- Custom CSS Schedule -->
     <link rel="stylesheet" href="{{ asset('assets/css/schedule.css') }}">
     
@@ -25,7 +25,7 @@
         body { padding-top: 80px; font-family: 'Poppins', sans-serif; }
     </style>
 </head>
-<body class="bg-light min-h-full flex flex-col">
+<body>
 
     <x-navbar></x-navbar>
 

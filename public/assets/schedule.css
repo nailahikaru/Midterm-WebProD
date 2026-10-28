@@ -1,13 +1,17 @@
-:root {
-    /* Ganti warna Primary (tombol, navbar, link) */
-    --bs-primary: #A9EEFE; 
-    --bs-primary-rgb: 37, 99, 235;
-    
-    /* Ganti warna background body */
-    --bs-body-bg: #F6F8FB;
-    
-    /* Ganti warna teks utama */
-    --bs-body-color: #222B3A;
+body {
+  background-image: url('/image/background-1.webp') !important; 
+  background-size: cover !important; 
+  background-position: center !important; 
+  background-repeat: no-repeat !important; 
+  background-attachment: fixed !important; 
+  
+  background-color: transparent !important; 
+  
+  min-height: 100vh;
+  color: #0E2341;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Card Custom */
