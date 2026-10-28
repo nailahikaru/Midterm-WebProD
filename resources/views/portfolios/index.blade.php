@@ -4,9 +4,11 @@
 @section('content')
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="h2 fw-semibold mb-0">Portofolio Karya</h1>
-    <a href="{{ route('portfolios.create') }}" class="btn btn-primary">
-      <i class="bi bi-plus-lg"></i> Tambah
-    </a>
+    @auth
+      <a href="{{ route('portfolios.create') }}" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Tambah
+      </a>
+    @endauth
   </div>
 
   @if (session('success'))
@@ -68,19 +70,21 @@
             @endif
             <small class="text-muted">{{ $portfolio->created_at->format('d M Y') }}</small>
 
-            <div class="mt-3 d-flex gap-2">
-              <a href="{{ route('portfolios.edit', $portfolio) }}" class="btn btn-sm btn-outline-primary">
-                <i class="bi bi-pencil"></i> Ubah
-              </a>
-              <form action="{{ route('portfolios.destroy', $portfolio) }}" method="POST"
-                    onsubmit="return confirm('Hapus portofolio ini beserta semua gambarnya?')">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-outline-danger">
-                  <i class="bi bi-trash"></i> Hapus
-                </button>
-              </form>
-            </div>
+            @auth
+              <div class="mt-3 d-flex gap-2">
+                <a href="{{ route('portfolios.edit', $portfolio) }}" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-pencil"></i> Ubah
+                </a>
+                <form action="{{ route('portfolios.destroy', $portfolio) }}" method="POST"
+                      onsubmit="return confirm('Hapus portofolio ini beserta semua gambarnya?')">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-sm btn-outline-danger">
+                    <i class="bi bi-trash"></i> Hapus
+                  </button>
+                </form>
+              </div>
+            @endauth
           </div>
 
         </div>

@@ -4,9 +4,11 @@
 @section('content')
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="h2 fw-semibold mb-0">Event Kepanitiaan</h1>
-    <a href="{{ route('events.create') }}" class="btn btn-primary">
-      <i class="bi bi-plus-lg"></i> Tambah Event
-    </a>
+    @auth
+      <a href="{{ route('events.create') }}" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Tambah Event
+      </a>
+    @endauth
   </div>
 
   @if (session('success'))
@@ -49,17 +51,19 @@
               <a href="{{ route('events.show', $event) }}" class="btn btn-sm btn-primary">
                 Detail dan Daftar
               </a>
-              <a href="{{ route('events.edit', $event) }}" class="btn btn-sm btn-outline-primary">
-                <i class="bi bi-pencil"></i> Ubah
-              </a>
-              <form action="{{ route('events.destroy', $event) }}" method="POST"
-                    onsubmit="return confirm('Hapus event ini beserta semua pendaftarnya?')">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-outline-danger">
-                  <i class="bi bi-trash"></i> Hapus
-                </button>
-              </form>
+              @auth
+                <a href="{{ route('events.edit', $event) }}" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-pencil"></i> Ubah
+                </a>
+                <form action="{{ route('events.destroy', $event) }}" method="POST"
+                      onsubmit="return confirm('Hapus event ini beserta semua pendaftarnya?')">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-sm btn-outline-danger">
+                    <i class="bi bi-trash"></i> Hapus
+                  </button>
+                </form>
+              @endauth
             </div>
           </div>
         </div>
