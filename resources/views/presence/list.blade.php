@@ -23,7 +23,7 @@
 </head>
 <body class="bg-light">
 
-    {{-- <x-navbar></x-navbar> --}}
+    <x-navbar></x-navbar>
 
     <div class="container pb-5 my-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -80,7 +80,7 @@
         </div>
     </div>
 
-    {{-- <x-footer></x-footer> --}}
+    <x-footer></x-footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
