@@ -31,7 +31,8 @@
           <li class="nav-item">
             <a class="nav-link {{ request()->is('events*') ? 'active' : '' }}" href="{{ route('events.index') }}">Event</a>
           </li>
-
+        </ul>
+        <ul class="navbar-nav ms-auto">
           @guest
             <li class="nav-item">
               <a class="nav-link {{ request()->is('login') ? 'active' : '' }}" href="{{ route('login') }}">Login</a>

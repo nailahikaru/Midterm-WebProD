@@ -1,7 +1,6 @@
 /* Footer */
 footer {
-  margin-top: 5rem;
-  background: #70B5EA;
+   background: #70B5EA;
   background: linear-gradient(90deg, rgba(112, 181, 234, 1) 0%, rgba(89, 156, 225, 1) 50%, rgba(236, 164, 224, 1) 100%);
   color: #F6F8FB;
   padding: 1rem 0;
@@ -9,6 +8,8 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  margin-top: auto; 
 }
 
 footer a {
